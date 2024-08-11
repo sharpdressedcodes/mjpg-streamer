@@ -3,8 +3,16 @@ Description=A server for streaming Motion-JPEG from a video capture device
 After=network.target
 
 [Service]
-User=mjpg_streamer
-ExecStart=/usr/bin/mjpg_streamer -i 'input_uvc.so -d /dev/%I' -o 'output_http.so -w /usr/share/mjpg_streamer/www'
+Environment=APP_PATH=/home/greg/mjpg-streamer/apps/mjpg-streamer-experimental
+Environment=LD_LIBRARY_PATH=/home/greg/apps/mjpg-streamer/mjpg-streamer-experimental
+#User=mjpg_streamer
+User=greg
+#ExecStart=/usr/bin/mjpg_streamer -i 'input_uvc.so -d /dev/%I' -o 'output_http.so -w /usr/share/mjpg_streamer/www'
+ExecStart=/home/greg/apps/mjpg-streamer/mjpg-streamer-experimental/mjpg_streamer -o "output_http.so -w /home/greg/apps/mjpg-streamer/mjpg-streamer-experimental/www -p 3000 -l 0.0.0.0" -i "input_uvc.so -d /dev/video0 -r 1280x720 -timeout 30" -i "input_uvc.so -d /dev/video2 -r 640x480 -timeout 30"
+ExecStop=/bin/bash /home/greg/apps/mjpg-streamer/mjpg-streamer-experimental/kill-cameras.sh
+Restart=always
+RestartSec=10
+#Type=forking
 
 [Install]
 WantedBy=multi-user.target

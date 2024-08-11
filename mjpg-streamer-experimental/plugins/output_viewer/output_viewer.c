@@ -295,7 +295,8 @@ void *worker_thread(void *arg)
 
         if(firstrun) {
             /* create the primary surface (the visible window) */
-            screen = SDL_SetVideoMode(rgbimage.width, rgbimage.height, 0, SDL_ANYFORMAT | SDL_HWSURFACE);
+            //screen = SDL_SetVideoMode(rgbimage.width, rgbimage.height, 0, SDL_ANYFORMAT | SDL_HWSURFACE);
+            screen = SDL_SetVideoMode(rgbimage.width, rgbimage.height, 0, SDL_HWSURFACE | SDL_RESIZABLE | SDL_DOUBLEBUF);
             SDL_WM_SetCaption("MJPG-Streamer Viewer", NULL);
 
             /* create a SDL surface to display the data */
